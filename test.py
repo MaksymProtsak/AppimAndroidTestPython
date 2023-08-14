@@ -2,8 +2,9 @@ import unittest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.ui import WebDriverWait
+
 
 capabilities = dict(
     autoGrantPermissions = True,
@@ -30,11 +31,11 @@ class TestAppium(unittest.TestCase):
         self.driver = webdriver.Remote(appium_server_url, capabilities)
 
     def tearDown(self) -> None:
-        #if self.driver:
+        # if self.driver:
         #    self.driver.quit()
         pass
 
-    def test_ajax(self) -> None:
+    def testLogIn(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(AppiumBy.ID, "com.ajaxsystems:id/authHelloLogin").click()
         self.driver.implicitly_wait(2)
@@ -54,13 +55,20 @@ class TestAppium(unittest.TestCase):
         self.driver.execute_script("mobile: performEditorAction", {"action": "qa_automation"})
         self.driver.implicitly_wait(2)
         self.driver.execute_script("mobile: performEditorAction", {"action": "_password"})
-        self.driver.implicitly_wait(2)
-
-        self.driver.find_element(AppiumBy.ID,'com.ajaxsystems:id/bottomContent').click()
         self.driver.implicitly_wait(5)
 
+        self.driver.find_element(AppiumBy.ID,'com.ajaxsystems:id/bottomContent').click()
 
-        
+        screenSize=self.driver.get_window_size()
+        print(screenSize)
 
+        self.driver.implicitly_wait(20)
+        try:
+            self.assertIsNotNone(self.driver.find_element(AppiumBy.ID, 'com.ajaxsystems:id/menuDrawer'))
+            print('com.ajaxsystems:id/menuDrawer','<<< finded')  
+        except:
+            print('com.ajaxsystems:id/menuDrawer','<<< not foud')  
+            return False
+        self.driver.swipe(0,screenSize['height']/2,screenSize['width']/2,screenSize['height']/2,200)
 if __name__ == '__main__':
     unittest.main()
