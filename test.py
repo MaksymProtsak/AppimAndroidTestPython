@@ -48,10 +48,26 @@ class TestAppium(unittest.TestCase):
         self.driver.implicitly_wait(2)
 
         # Python
-        from appium.webdriver.common.touch_action import TouchAction
-        # ...
-        actions = TouchAction(self.driver)
-        actions.perform()
+        # from appium.webdriver.common.touch_action import TouchAction
+        # actions = TouchAction(self.driver)
+        # actions.long_press(self.driver.find_element(AppiumBy.ID, 'com.ajaxsystems:id/authLoginEmail'), duration=2000)
+        # self.driver.implicitly_wait(5)
+
+        # actions.perform()
+
+        from selenium.webdriver.common.action_chains import ActionChains
+        from selenium.webdriver.common.keys import Keys
+        action = ActionChains(self.driver)
+        ActionChains(self.driver).key_down(Keys.CONTROL).send_keys('a').perform()
+        ActionChains(self.driver).key_down(Keys.DELETE).perform()
+        ActionChains(self.driver).send_keys('qa.ajax.app.automation@gmail.com').perform()
+
+
+
+        self.driver.implicitly_wait(5)
+
+
+
 
 
         # self.driver.find_element(AppiumBy.ID,'com.ajaxsystems:id/authLoginPassword').click()
