@@ -1,3 +1,5 @@
+print("it is 'conftest.py'")
+
 import subprocess
 import time
 
