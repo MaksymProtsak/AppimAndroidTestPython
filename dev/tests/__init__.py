@@ -1,4 +1,1 @@
-print()
-print("it is 'tests' folder")
-print()
-import conftest
+print("Hello from sub_module!")
